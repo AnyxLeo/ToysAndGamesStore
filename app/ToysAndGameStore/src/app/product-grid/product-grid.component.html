@@ -1,0 +1,71 @@
+<h1>Inventory</h1>
+<div class="container">
+  <div
+    *ngIf="showError === true"
+    class="alert alert-danger alert-dismissible fade show"
+    role="alert"
+  >
+    <p>Ups! Something went wrong.</p>
+    <em>{{ error }}</em>
+    <button
+      type="button"
+      class="close"
+      data-dismiss="alert"
+      aria-label="Close"
+      (click)="onCloseErrorAlert()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <table class="table table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Actions</th>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Age</th>
+        <th scope="col">Price</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="isLoading">
+      <tr>
+        <div class="spinner-grow" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow" role="status">
+          <span class="sr-only">.</span>
+        </div>
+        <div class="spinner-grow" role="status">
+          <span class="sr-only">.</span>
+        </div>
+      </tr>
+    </tbody>
+    <tbody *ngFor="let item of items">
+      <tr>
+        <td>
+          <a
+            class="button fancy-button"
+            [title]="item.name + ' details'"
+            [routerLink]="['products/', item.Id]"
+          >
+            <i class="material-icons">edit</i>
+          </a>
+          <a
+            class="button fancy-button"
+            [title]="'Delete ' + item.Name"
+            (click)="onDelete(item.Id)"
+          >
+            <i class="material-icons">delete_forever</i>
+          </a>
+        </td>
+        <th scope="row">{{ item.Id }}</th>
+        <td>{{ item.Name }}</td>
+        <td>{{ item.AgeRestriction }}</td>
+        <td>{{ item.Price | currency }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<a class="button" routerLink="products"
+  ><i class="material-icons iconButton">add</i>Add new</a
+>
